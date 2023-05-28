@@ -10,7 +10,6 @@ import java.util.HashMap;
 import com.apps.studentms.entities.Student;
 import com.apps.studentms.utilities.Utils;
 
-@Repository("studentRepository")
 public class StudentRepositoryImpl implements IDAO {
 
 	private Map<Integer, Student> studentsDB;

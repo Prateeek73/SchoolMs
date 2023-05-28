@@ -18,10 +18,8 @@ import com.apps.studentms.entities.Student;
 import com.apps.studentms.entities.StudentNotFoundException;
 import com.apps.studentms.utilities.Utils;
 
-@Service("studentService")
 public class StudentServiceImpl implements IService {
 
-	@Autowired
 	private IDAO repository;
 
 	public StudentServiceImpl() {
@@ -29,7 +27,7 @@ public class StudentServiceImpl implements IService {
 	}
 
 	public StudentServiceImpl(StudentRepositoryImpl speakerRepository) {
-		repository = speakerRepository;
+		this.repository = speakerRepository;
 	}
 
 	public void setRepository(StudentRepositoryImpl studentServiceImpl) {

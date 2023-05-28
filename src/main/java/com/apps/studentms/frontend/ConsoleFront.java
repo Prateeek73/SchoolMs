@@ -22,80 +22,80 @@ public class ConsoleFront {
 	private IService service;
 
 	public ConsoleFront(ApplicationContext appContext) {
-		// service = appContext.getBean("studentService", StudentServiceImpl.class);
+		service = appContext.getBean("studentService", StudentServiceImpl.class);
 	}
 
 	public void runUI() {
 		printSnippet();
-		do {
-			try {
-				System.out.print("\nEnter  your choice here: ");
-				String choice = reader.readLine();
-				Student student;
-				List<Student> studentsList;
-				switch (choice) {
-				case "0":
-					System.exit(0);
-				case "1":
-					student = service.addStudent(getAddStudent());
-					if (student != null)
-						System.out.println("Student added with details: " + student);
-					break;
-				case "2":
-					System.out.print("Enter id of student to fetch: ");
-					student = service.getStudent(Integer.valueOf(reader.readLine()));
-					if (student != null)
-						System.out.println("Student details of id: " + student);
-					break;
-				case "3":
-					System.out.print("Enter id of student to be removed: ");
-					student = service.removeStudent(Integer.valueOf(reader.readLine()));
-					if (student != null)
-						System.out.println("Student details removed: " + student);
-					break;
-				case "4":
-					System.out.print("Enter id of student to update: ");
-					System.out.println("Student detailes replaced for: "
-							+ service.updateStudent(Integer.valueOf(reader.readLine()), getUpdateStudent()));
-					break;
-				case "5":
-					System.out.println("List of all students: ");
-					studentsList = service.getAllStudents();
-					if (!studentsList.isEmpty())
-						studentsList.stream().forEach(System.out::println);
-					break;
-				case "6":
-					System.out.println("List of students by age: ");
-					studentsList = service.getStudentsByAge();
-					studentsList.stream().forEach(System.out::println);
-					break;
-				case "7":
-					System.out.println("List of students by name: ");
-					studentsList = service.getStudentsByAge();
-					studentsList.stream().forEach(System.out::println);
-					break;
-				case "8":
-					System.out.print("Enter stream of students to fetch: ");
-					System.out.println("List of students by stream: ");
-					studentsList = service.getStudentsBySubject(reader.readLine());
-					studentsList.stream().forEach(System.out::println);
-					break;
-				case "9":
-					printSnippet();
-				default:
-					continue;
-				}
-			} catch (IOException ex) {
-				System.err.println(ex.getMessage());
-			} catch (NumberFormatException ex) {
-				System.err.println("Invalid input: " + ex.getMessage());
-			} catch (ArrayIndexOutOfBoundsException ex) {
-				System.err.println(ex.getMessage());
-			} catch (Exception ex) {
-				System.err.println("Invalid input: " + ex.getMessage());
-				ex.printStackTrace();
-			}
-		} while(false);
+		// do {
+		// 	try {
+		// 		System.out.print("\nEnter  your choice here: ");
+		// 		String choice = reader.readLine();
+		// 		Student student;
+		// 		List<Student> studentsList;
+		// 		switch (choice) {
+		// 		case "0":
+		// 			System.exit(0);
+		// 		case "1":
+		// 			student = service.addStudent(getAddStudent());
+		// 			if (student != null)
+		// 				System.out.println("Student added with details: " + student);
+		// 			break;
+		// 		case "2":
+		// 			System.out.print("Enter id of student to fetch: ");
+		// 			student = service.getStudent(Integer.valueOf(reader.readLine()));
+		// 			if (student != null)
+		// 				System.out.println("Student details of id: " + student);
+		// 			break;
+		// 		case "3":
+		// 			System.out.print("Enter id of student to be removed: ");
+		// 			student = service.removeStudent(Integer.valueOf(reader.readLine()));
+		// 			if (student != null)
+		// 				System.out.println("Student details removed: " + student);
+		// 			break;
+		// 		case "4":
+		// 			System.out.print("Enter id of student to update: ");
+		// 			System.out.println("Student detailes replaced for: "
+		// 					+ service.updateStudent(Integer.valueOf(reader.readLine()), getUpdateStudent()));
+		// 			break;
+		// 		case "5":
+		// 			System.out.println("List of all students: ");
+		// 			studentsList = service.getAllStudents();
+		// 			if (!studentsList.isEmpty())
+		// 				studentsList.stream().forEach(System.out::println);
+		// 			break;
+		// 		case "6":
+		// 			System.out.println("List of students by age: ");
+		// 			studentsList = service.getStudentsByAge();
+		// 			studentsList.stream().forEach(System.out::println);
+		// 			break;
+		// 		case "7":
+		// 			System.out.println("List of students by name: ");
+		// 			studentsList = service.getStudentsByAge();
+		// 			studentsList.stream().forEach(System.out::println);
+		// 			break;
+		// 		case "8":
+		// 			System.out.print("Enter stream of students to fetch: ");
+		// 			System.out.println("List of students by stream: ");
+		// 			studentsList = service.getStudentsBySubject(reader.readLine());
+		// 			studentsList.stream().forEach(System.out::println);
+		// 			break;
+		// 		case "9":
+		// 			printSnippet();
+		// 		default:
+		// 			continue;
+		// 		}
+		// 	} catch (IOException ex) {
+		// 		System.err.println(ex.getMessage());
+		// 	} catch (NumberFormatException ex) {
+		// 		System.err.println("Invalid input: " + ex.getMessage());
+		// 	} catch (ArrayIndexOutOfBoundsException ex) {
+		// 		System.err.println(ex.getMessage());
+		// 	} catch (Exception ex) {
+		// 		System.err.println("Invalid input: " + ex.getMessage());
+		// 		ex.printStackTrace();
+		// 	}
+		// } while(false);
 	}
 
 	private static void printSnippet() {
