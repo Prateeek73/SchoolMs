@@ -11,16 +11,18 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
 public class ConsoleFront {
 
 	private final static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
+	@Autowired
 	private IService service;
 
 	public ConsoleFront(ApplicationContext appContext) {
-		service = appContext.getBean("studentService", StudentServiceImpl.class);
+		// service = appContext.getBean("studentService", StudentServiceImpl.class);
 	}
 
 	public void runUI() {

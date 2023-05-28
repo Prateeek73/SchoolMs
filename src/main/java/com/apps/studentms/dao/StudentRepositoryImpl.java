@@ -1,12 +1,16 @@
 package com.apps.studentms.dao;
 
 import java.util.Map;
+
+import org.springframework.stereotype.Repository;
+
 import java.util.Collection;
 import java.util.HashMap;
 
 import com.apps.studentms.entities.Student;
 import com.apps.studentms.utilities.Utils;
 
+@Repository("studentRepository")
 public class StudentRepositoryImpl implements IDAO {
 
 	private Map<Integer, Student> studentsDB;

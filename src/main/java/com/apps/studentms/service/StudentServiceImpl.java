@@ -5,6 +5,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.apps.studentms.dao.StudentRepositoryImpl;
 import com.apps.studentms.dao.IDAO;
 import com.apps.studentms.dto.AddStudent;
@@ -15,23 +18,20 @@ import com.apps.studentms.entities.Student;
 import com.apps.studentms.entities.StudentNotFoundException;
 import com.apps.studentms.utilities.Utils;
 
+@Service("studentService")
 public class StudentServiceImpl implements IService {
 
+	@Autowired
 	private IDAO repository;
 
-	
-
-	//default construtor for setter injection
 	public StudentServiceImpl() {
 
 	}
 
-	//parameterized constrcutor for constructor injection
 	public StudentServiceImpl(StudentRepositoryImpl speakerRepository) {
 		repository = speakerRepository;
 	}
 
-	//setter function for repostiroy
 	public void setRepository(StudentRepositoryImpl studentServiceImpl) {
 		this.repository = studentServiceImpl;
 	}
@@ -97,7 +97,7 @@ public class StudentServiceImpl implements IService {
 	public Student updateStudent(Integer id, UpdateStudent updateStudent) {
 		try {
 			getStudent(id);
-			
+
 			String firstName = updateStudent.getFirstName();
 			String lastName = updateStudent.getLastName();
 			Integer age = updateStudent.getAge();
