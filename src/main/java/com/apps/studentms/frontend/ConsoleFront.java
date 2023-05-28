@@ -4,12 +4,14 @@ import com.apps.studentms.dto.AddStudent;
 import com.apps.studentms.dto.UpdateStudent;
 import com.apps.studentms.entities.Student;
 import com.apps.studentms.service.IService;
-import com.apps.studentms.service.ServiceImpl;
+import com.apps.studentms.service.StudentServiceImpl;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
+
+import org.springframework.context.ApplicationContext;
 
 public class ConsoleFront {
 
@@ -17,13 +19,13 @@ public class ConsoleFront {
 
 	private IService service;
 
-	public ConsoleFront() {
-		service = new ServiceImpl();
+	public ConsoleFront(ApplicationContext appContext) {
+		service = appContext.getBean("studentService", StudentServiceImpl.class);
 	}
 
 	public void runUI() {
 		printSnippet();
-		while (true) {
+		do {
 			try {
 				System.out.print("\nEnter  your choice here: ");
 				String choice = reader.readLine();
@@ -91,7 +93,7 @@ public class ConsoleFront {
 				System.err.println("Invalid input: " + ex.getMessage());
 				ex.printStackTrace();
 			}
-		}
+		} while(false);
 	}
 
 	private static void printSnippet() {

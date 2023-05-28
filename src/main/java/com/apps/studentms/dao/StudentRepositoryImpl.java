@@ -7,11 +7,11 @@ import java.util.HashMap;
 import com.apps.studentms.entities.Student;
 import com.apps.studentms.utilities.Utils;
 
-public class DAOMapImpl implements IDAO {
+public class StudentRepositoryImpl implements IDAO {
 
 	private Map<Integer, Student> studentsDB;
 
-	public DAOMapImpl() {
+	public StudentRepositoryImpl() {
 		studentsDB = new HashMap<Integer, Student>(5);
 	}
 

@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.apps.studentms.dao.DAOMapImpl;
+import com.apps.studentms.dao.StudentRepositoryImpl;
 import com.apps.studentms.dao.IDAO;
 import com.apps.studentms.dto.AddStudent;
 import com.apps.studentms.dto.UpdateStudent;
@@ -15,12 +15,25 @@ import com.apps.studentms.entities.Student;
 import com.apps.studentms.entities.StudentNotFoundException;
 import com.apps.studentms.utilities.Utils;
 
-public class ServiceImpl implements IService {
+public class StudentServiceImpl implements IService {
 
-	private IDAO studentRepository;
+	private IDAO repository;
 
-	public ServiceImpl() {
-		studentRepository = new DAOMapImpl();
+	
+
+	//default construtor for setter injection
+	public StudentServiceImpl() {
+
+	}
+
+	//parameterized constrcutor for constructor injection
+	public StudentServiceImpl(StudentRepositoryImpl speakerRepository) {
+		repository = speakerRepository;
+	}
+
+	//setter function for repostiroy
+	public void setRepository(StudentRepositoryImpl studentServiceImpl) {
+		this.repository = studentServiceImpl;
 	}
 
 	@Override
@@ -36,7 +49,7 @@ public class ServiceImpl implements IService {
 			if (!Utils.validateEmailId(emailId))
 				throw new InvalidEmailException("The provided email id is invalid: " + emailId);
 			Student student = new Student(firstName, lastName, age, emailId, stream);
-			return studentRepository.addStudent(student);
+			return repository.addStudent(student);
 		} catch (InvalidStreamException ex) {
 			System.err.println(ex.getMessage());
 		} catch (InvalidEmailException ex) {
@@ -51,7 +64,7 @@ public class ServiceImpl implements IService {
 	@Override
 	public Student getStudent(Integer id) {
 		try {
-			Student student = studentRepository.getStudent(id);
+			Student student = repository.getStudent(id);
 			if (student == null)
 				throw new StudentNotFoundException("No student found for id: " + id);
 			return student;
@@ -67,7 +80,7 @@ public class ServiceImpl implements IService {
 	@Override
 	public Student removeStudent(Integer id) {
 		try {
-			Student student = studentRepository.removeStudent(id);
+			Student student = repository.removeStudent(id);
 			if (student == null)
 				throw new StudentNotFoundException("No student found for id: " + id);
 			return student;
@@ -97,7 +110,7 @@ public class ServiceImpl implements IService {
 
 			Student studentUpdated = new Student(firstName, lastName, age, emailId, stream);
 			studentUpdated.setId(id);
-			return studentRepository.updateStudent(id, studentUpdated);
+			return repository.updateStudent(id, studentUpdated);
 		} catch (InvalidStreamException ex) {
 			System.err.println(ex.getMessage());
 			ex.printStackTrace();
@@ -112,19 +125,19 @@ public class ServiceImpl implements IService {
 
 	@Override
 	public List<Student> getAllStudents() {
-		return studentRepository.fetchAll().stream().collect(Collectors.toList());
+		return repository.fetchAll().stream().collect(Collectors.toList());
 	}
 
 	@Override
 	public List<Student> getStudentsByAge() {
-		Collection<Student> studentList = Collections.unmodifiableCollection(studentRepository.fetchAll());
+		Collection<Student> studentList = Collections.unmodifiableCollection(repository.fetchAll());
 		return studentList.stream().sorted((s1, s2) -> Integer.compare(s1.getAge(), s2.getAge()))
 				.collect(Collectors.toList());
 	}
 
 	@Override
 	public List<Student> getStudentByName() {
-		Collection<Student> studentList = Collections.unmodifiableCollection(studentRepository.fetchAll());
+		Collection<Student> studentList = Collections.unmodifiableCollection(repository.fetchAll());
 		return studentList.stream().sorted((s1, s2) -> s1.getFirstName().compareTo(s2.getFirstName()))
 				.collect(Collectors.toList());
 	}
@@ -133,7 +146,7 @@ public class ServiceImpl implements IService {
 	public List<Student> getStudentsBySubject(String subjectCode) {
 		try {
 			Student.Subjects stream = Utils.getSubjectEnum(subjectCode);
-			Collection<Student> studentList = Collections.unmodifiableCollection(studentRepository.fetchAll());
+			Collection<Student> studentList = Collections.unmodifiableCollection(repository.fetchAll());
 			return studentList.stream().filter(student -> student.getStream() == stream).collect(Collectors.toList());
 		} catch (InvalidStreamException ex) {
 			System.err.println(ex.getMessage());
